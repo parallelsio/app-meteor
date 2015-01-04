@@ -12,11 +12,11 @@ before_install:
   - npm install -g grunt-cli bower
 
 before_script:
-  - grunt bgShell:resetdb
+  - grunt bgShell:resetdb --verbose
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
-  - grunt bgShell:meteor
+  - grunt bgShell:meteor --verbose
   - sleep 3
 
 addons:
