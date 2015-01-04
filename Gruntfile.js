@@ -67,6 +67,12 @@ module.exports = function (grunt) {
         privateKey: 'extensions/chrome.pem'
       }
     },
+    encode: {
+      client: {
+        src: ['<%= config.dist %>/parallels.crx'],
+        dest: '<%= config.dist %>'
+      }
+    },
     bgShell: {
       meteor: {
         cmd: [
@@ -91,6 +97,12 @@ module.exports = function (grunt) {
           'cd <%= config.chrome_ext %>',
           'bower install'
         ].join('&&'),
+        bg: false,
+        stdout: true,
+        stderr: true
+      },
+      tests: {
+        cmd: 'node node_modules/cucumber/bin/cucumber.js tests/features',
         bg: false,
         stdout: true,
         stderr: true
@@ -250,6 +262,13 @@ module.exports = function (grunt) {
     ];
 
     grunt.task.run(tasks);
+  });
+
+  grunt.registerTask('test', 'Run the testing tasks', function (target) {
+    if (target !== 'debug')
+      target = '';
+
+    grunt.task.run('bgShell:tests' + target);
   });
 
   grunt.registerTask('bower', [

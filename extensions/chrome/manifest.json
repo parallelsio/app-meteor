@@ -30,7 +30,9 @@
         "bower_components/requirejs/require.js",
         "scripts/requireContent.js",
         "scripts/requireConfig.js",
-        "scripts/inject.js"
+        "scripts/inject.js",
+
+        "scripts/inject.testHelper.js"
       ],
       "run_at": "document_end",
       "all_frames": false

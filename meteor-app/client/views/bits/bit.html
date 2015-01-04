@@ -1,5 +1,5 @@
 <template name="bit">
-  <div data-id="{{ _id }}" class="bit {{ type }}">
+  <div data-id="{{ _id }}" class="bit {{ type }}" data-title="{{ title }}">
     <div class="container">
       <div class="face front {{ color }}">
         <div class="content">
@@ -12,7 +12,7 @@
 
             {{#if filename }}
               <img src="images/1000/{{ filename }}.jpg">
-                
+
             {{ else }}
 
               {{#if imageDataUrl }}
