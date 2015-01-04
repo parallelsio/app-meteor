@@ -10,3 +10,4 @@ tmp
 .sass-cache/
 extensions/chrome/bower_components
 settings.json
+chromeprofile/

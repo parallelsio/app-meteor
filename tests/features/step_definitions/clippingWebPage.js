@@ -6,7 +6,13 @@ module.exports = function () {
   var currentPage;
 
   this.When(/^I navigate to a webpage$/, function (callback) {
-    currentPage = new CanvasPage(this, callback);
+    currentPage = new CanvasPage(this, function(pageLoaded) {
+      if (pageLoaded) {
+        callback();
+      } else {
+        callback.fail('Parallels is not running or did not load successfully at ' + currentPage.parallelsUrl);
+      }
+    });
   });
 
   this.When(/^I use the extension to save$/, function (callback) {

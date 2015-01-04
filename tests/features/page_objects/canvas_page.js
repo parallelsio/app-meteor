@@ -2,25 +2,23 @@ function CanvasPage(world, callback) {
     var that = this;
 
     that.browser = world.browser;
-    that.issueUrl = "http://127.0.0.1:3000";
+    that.parallelsUrl = "http://127.0.0.1:3000";
     that.settings = world.settings;
 
     that.browser.getAllWindowHandles().then(function (handles) {
       that.handle = handles[0];
     });
 
-    that._navigate().then(callback);
+    that._navigate(callback);
 }
 
-CanvasPage.prototype._navigate = function () {
+CanvasPage.prototype._navigate = function (callback) {
   var that = this;
-  that.browser.get(that.issueUrl);
+  that.browser.get(that.parallelsUrl);
   that.browser.sleep(2000); // wait for the animations
 
   // Have to chain 'then' to make this a promise and not immediately execute
-  return that.browser.isElementPresent({xpath: '//div[@class="map"]'}).then(function(isPresent) {
-    console.log('map present: ' + isPresent);
-  });
+  return that.browser.isElementPresent({xpath: '//div[@class="map"]'}).then(callback);
 };
 
 
@@ -41,7 +39,7 @@ CanvasPage.prototype.switchToClipperFrame = function () {
 
 CanvasPage.prototype.switchToPage = function () {
   return this.browser.switchTo().window(this.handle);
-}
+};
 
 CanvasPage.prototype.toggleClipper = function () {
   this.browser.findElement({id: "activate-extension"}).click();
