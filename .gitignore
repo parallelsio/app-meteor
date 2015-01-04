@@ -2,7 +2,7 @@
 .idea
 node_modules
 *.log
-build/
+build/chrome
 config.json
 /meteor-core/settings.json
 .npm/

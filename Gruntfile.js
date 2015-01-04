@@ -83,6 +83,15 @@ module.exports = function (grunt) {
         stdout: true,
         stderr: true
       },
+      resetdb: {
+        cmd: [
+          'cd meteor-app',
+          'meteor reset'
+        ].join('&&'),
+        bg: false,
+        stdout: true,
+        stderr: true
+      },
       meteordebug: {
         cmd: [
           'cd meteor-app',
