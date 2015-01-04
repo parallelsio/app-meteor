@@ -20,5 +20,8 @@
     "jshint-stylish": "^1.0.0",
     "matchdep": "^0.3.0",
     "selenium-webdriver": "^2.44.0"
+  },
+  "scripts": {
+    "test": "grunt test --verbose"
   }
 }
