@@ -2,7 +2,7 @@ function CanvasPage(world, callback) {
     var that = this;
 
     that.browser = world.browser;
-    that.issueUrl = "127.0.0.1:3000";
+    that.issueUrl = "http://127.0.0.1:3000";
     that.settings = world.settings;
 
     that.browser.getAllWindowHandles().then(function (handles) {
