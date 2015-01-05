@@ -16,7 +16,8 @@ METEOR_LOG=$(mktemp /tmp/meteor.startup.XXXXXXXX)
 
 grunt bgShell:resetdb
 
-java -jar $BASE_DIR/bin/selenium-server-standalone-2.44.0.jar -Dwebdriver.chrome.driver=$BASE_DIR/bin/chromedriver > $SELENIUM_LOG 2>&1 &
+# Start Selenium server
+java -jar $BASE_DIR/lib/selenium-server-standalone-2.44.0.jar -Dwebdriver.chrome.driver=$BASE_DIR/lib/chromedriver > $SELENIUM_LOG 2>&1 &
 
 # Start Meteor
 cd meteor-app
@@ -33,4 +34,3 @@ grunt test
 
 # Do some cleanup
 kill $(jobs -p)
-kill `ps ax | grep meteor | grep -v grep | awk '{print $1}'`
