@@ -25,7 +25,22 @@ module.exports = function (grunt) {
       dist: {
         expand: true,
         cwd: 'extensions/chrome',
-        src: '**',
+        src: [
+          '_locales/**',
+          'bower_components/jquery/dist/jquery.min.js',
+          'bower_components/gsap/src/minified/TweenMax.min.js',
+          'bower_components/ddp.js/src/ddp.js',
+          'bower_components/q/q.js',
+          'bower_components/asteroid/dist/asteroid.chrome.js',
+          'bower_components/requirejs/require.js',
+          'html/*',
+          'images/*',
+          'scripts/**',
+          'styles/compiled/*',
+          'styles/vendor/*',
+          'typefaces/*',
+          'manifest.json'
+        ],
         dest: '<%= config.dist %>/chrome/'
       }
     },

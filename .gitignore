@@ -13,3 +13,4 @@ settings.json
 chromeprofile/
 *.pem
 *.crx
+build/
