@@ -6,7 +6,7 @@ module.exports = function () {
   var currentPage;
 
   this.When(/^I navigate to a webpage$/, function (callback) {
-    currentPage = new CanvasPage(this, function(pageLoaded) {
+    currentPage = new CanvasPage(this, function (pageLoaded) {
       if (pageLoaded) {
         callback();
       } else {

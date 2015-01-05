@@ -1,15 +1,15 @@
 function CanvasPage(world, callback) {
-    var that = this;
+  var that = this;
 
-    that.browser = world.browser;
-    that.parallelsUrl = "http://127.0.0.1:3000";
-    that.settings = world.settings;
+  that.browser = world.browser;
+  that.parallelsUrl = "http://127.0.0.1:3000";
+  that.settings = world.settings;
 
-    that.browser.getAllWindowHandles().then(function (handles) {
-      that.handle = handles[0];
-    });
+  that.browser.getAllWindowHandles().then(function (handles) {
+    that.handle = handles[0];
+  });
 
-    that._navigate(callback);
+  that._navigate(callback);
 }
 
 CanvasPage.prototype._navigate = function (callback) {
@@ -25,7 +25,7 @@ CanvasPage.prototype._navigate = function (callback) {
 CanvasPage.prototype.isBitPresent = function (id) {
   var that = this;
 
-  var xpath = "//div[@data-title='"+ id + "']";
+  var xpath = "//div[@data-title='" + id + "']";
 
   return that.browser.isElementPresent({
     xpath: xpath
