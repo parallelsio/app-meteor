@@ -97,6 +97,13 @@ module.exports = function (grunt) {
         stderr: true,
         fail: true
       },
+      e2eheadless: {
+        cmd: './bin/run_tests.sh --headless',
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: true
+      },
       meteor: {
         cmd: [
           'cd meteor-app',
@@ -107,12 +114,7 @@ module.exports = function (grunt) {
         stderr: true
       },
       resetTestDb: {
-        cmd: [
-          'mongo <<EOF',
-          'use parallels_test',
-          'db.dropDatabase()',
-          'EOF'
-        ].join('\n'),
+        cmd: 'mongo parallels_test --eval "printjson(db.dropDatabase())"',
         bg: false,
         stdout: true,
         stderr: true,
@@ -310,7 +312,18 @@ module.exports = function (grunt) {
     'bgShell:bowerChromeExt'
   ]);
 
-  grunt.registerTask('e2e-tests', [ 'bgShell:resetTestDb', 'bgShell:e2e' ]);
+  grunt.registerTask('e2e-tests', 'Run integration tests', function (target) {
+    if (target !== 'headless')
+      target = '';
+
+    var tasks = [
+      'build',
+      'bgShell:resetTestDb',
+      'bgShell:e2e' + target
+    ];
+
+    grunt.task.run(tasks);
+  });
 
   grunt.registerTask('default', 'server');
 };

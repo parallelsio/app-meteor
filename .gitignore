@@ -11,6 +11,5 @@ tmp
 extensions/chrome/bower_components
 settings.json
 chromeprofile/
-*.pem
 *.crx
 build/

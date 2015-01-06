@@ -11,24 +11,11 @@ before_install:
   - gem install compass
   - npm install -g grunt-cli bower
   - "curl https://install.meteor.com | /bin/sh"
-
-before_script:
-  - grunt bgShell:resetdb
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3
-  - grunt bgShell:meteor &
-  - sleep 3
-
-addons:
-  sauce_connect:
-    username: "angelcabo3"
-    access_key:
-      secure: "vaizOF9erSgg89fvebuLt/EjXzqKMOeBjBXrjXYLdv7ayrtv17daDIz2EnU15hPCeqL2w8jKYpptvZTMnk925rMDQz554pD7F7PYMbF8HV4C/xOiqa4+odd660dy6ho/L85CmdoKjZq7eVp2NgUTa/j5AiZ5kzoltsFmZdDy1g4="
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0, 1366x768x24"
 
 notifications:
   slack:
     secure: S6vA1tXv8LA4JuXnbJ/RkrKXYOeD5JUR/MwCA9rH4/6l/9IFDRKVs2TMJ7GJEwj92ql7+hx/e7xnkqMzghRF3crsk4Wsv1i1wmAYr+jvhdtDRcdeHcA/P1wVbQHoSAWBRDPC6BN4+0ICWmiJ6DLa8a8e7C6bRVQpQMjS77RhWBI=
 
 script:
-  grunt test
+  grunt e2e-tests:headless
