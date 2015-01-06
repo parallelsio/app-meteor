@@ -16,9 +16,11 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-crx": "^0.3.4",
+    "grunt-cucumber": "^0.2.3",
     "grunt-preprocess": "^4.1.0",
     "jshint-stylish": "^1.0.0",
     "matchdep": "^0.3.0",
+    "selenium-standalone": "^2.44.0-7",
     "selenium-webdriver": "^2.44.0"
   },
   "scripts": {

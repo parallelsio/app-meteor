@@ -89,6 +89,14 @@ module.exports = function (grunt) {
       }
     },
     bgShell: {
+      //xvfb-run --server-args="-screen 0, 1366x768x24" start-selenium
+      e2e: {
+        cmd: './bin/run_tests.sh',
+        bg: false,
+        stdout: true,
+        stderr: true,
+        fail: true
+      },
       meteor: {
         cmd: [
           'cd meteor-app',
@@ -98,14 +106,17 @@ module.exports = function (grunt) {
         stdout: true,
         stderr: true
       },
-      resetdb: {
+      resetTestDb: {
         cmd: [
-          'cd meteor-app',
-          'meteor reset'
-        ].join('&&'),
+          'mongo <<EOF',
+          'use parallels_test',
+          'db.dropDatabase()',
+          'EOF'
+        ].join('\n'),
         bg: false,
         stdout: true,
-        stderr: true
+        stderr: true,
+        fail: true
       },
       meteordebug: {
         cmd: [
@@ -126,7 +137,7 @@ module.exports = function (grunt) {
         stderr: true
       },
       tests: {
-        cmd: 'node node_modules/cucumber/bin/cucumber.js tests/features',
+        cmd: 'echo "NOTHING HERE YET"',
         bg: false,
         stdout: true,
         stderr: true
@@ -298,6 +309,8 @@ module.exports = function (grunt) {
   grunt.registerTask('bower', [
     'bgShell:bowerChromeExt'
   ]);
+
+  grunt.registerTask('e2e-tests', [ 'bgShell:resetTestDb', 'bgShell:e2e' ]);
 
   grunt.registerTask('default', 'server');
 };

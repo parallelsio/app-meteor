@@ -1,36 +1,24 @@
 #!/bin/sh
 
-# Get current working dir
-TARGET_FILE=`basename $0`
-
-while [ -L "$TARGET_FILE" ]
-do
-    TARGET_FILE=`readlink $TARGET_FILE`
-    cd `dirname $TARGET_FILE`
-    TARGET_FILE=`basename $TARGET_FILE`
-done
-BASE_DIR=`pwd -P`
-
 SELENIUM_LOG=$(mktemp /tmp/selenium.XXXXXXXX)
 METEOR_LOG=$(mktemp /tmp/meteor.startup.XXXXXXXX)
 
-grunt bgShell:resetdb
+echo "Starting Selenium server..."
+node_modules/selenium-standalone/bin/start-selenium > $SELENIUM_LOG 2>&1 &
 
-# Start Selenium server
-java -jar $BASE_DIR/lib/selenium-server-standalone-2.44.0.jar -Dwebdriver.chrome.driver=$BASE_DIR/lib/chromedriver > $SELENIUM_LOG 2>&1 &
-
-# Start Meteor
+echo "Starting Meteor App with DB: mongodb://localhost:27017/parallels_test"
 cd meteor-app
-meteor run --settings settings.json > $METEOR_LOG 2>&1 &
+MONGO_URL="mongodb://localhost:27017/parallels_test" meteor run --settings settings.json > $METEOR_LOG 2>&1 &
 
 # Wait for Meteor to finish booting
 tail -f $METEOR_LOG | while read LOGLINE
 do
    [[ "${LOGLINE}" == *"=> App running"* ]] && pkill -P $$ tail
 done
+cd ../
 
-# Running tests
-grunt test
+# Run integration tests
+node node_modules/cucumber/bin/cucumber.js tests/features
 
 # Do some cleanup
 kill $(jobs -p)
