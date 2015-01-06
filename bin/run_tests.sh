@@ -3,6 +3,7 @@
 set -e
 
 SELENIUM_LOG=$(mktemp /tmp/selenium.XXXXXXXX)
+METEOR_LOG=$(mktemp /tmp/meteor.startup.XXXXXXXX)
 
 if [[ $* == *--headless* ]]
 then
@@ -18,7 +19,12 @@ cd meteor-app
 MONGO_URL="mongodb://localhost:27017/parallels_test" meteor run --settings settings.json &
 cd ..
 
-sleep 15
+# Wait for Meteor to finish booting
+tail -f $METEOR_LOG | while read LOGLINE
+do
+   [[ "${LOGLINE}" == *"=> App running"* ]] && pkill -P $$ tail
+done
+cd ../
 
 # Run integration tests
 node node_modules/cucumber/bin/cucumber.js tests/features
