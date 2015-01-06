@@ -18,7 +18,7 @@ cd meteor-app
 MONGO_URL="mongodb://localhost:27017/parallels_test" meteor run --settings settings.json &
 cd ..
 
-sleep 5
+sleep 15
 
 # Run integration tests
 node node_modules/cucumber/bin/cucumber.js tests/features
