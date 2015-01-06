@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 SELENIUM_LOG=$(mktemp /tmp/selenium.XXXXXXXX)
 
 if [[ $* == *--headless* ]]
