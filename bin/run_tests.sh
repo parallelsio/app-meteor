@@ -15,10 +15,10 @@ fi
 
 echo "Starting Meteor App with DB: mongodb://localhost:27017/parallels_test"
 cd meteor-app
-MONGO_URL="mongodb://localhost:27017/parallels_test" meteor run --settings settings.json > /dev/null 2>&1 &
+MONGO_URL="mongodb://localhost:27017/parallels_test" meteor run --settings settings.json &
 cd ..
 
-sleep 3
+sleep 5
 
 # Run integration tests
 node node_modules/cucumber/bin/cucumber.js tests/features
