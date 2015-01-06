@@ -3,13 +3,8 @@
   "test": "tests",
   "chrome_ext": "extensions/chrome",
   "appRootUrl": {
-    "local": "http://localhost:3000",
-    "qa": "https://testserver.com",
-    "dist": "https://liveserver.com"
-  },
-  "webSocketUri": {
-    "local": "ws://localhost:3000/websocket",
-    "qa": "wss://testserver.com/websocket",
-    "dist": "wss://liveserver.com/websocket"
+    "local": "localhost:3000",
+    "ci": "testserver.com",
+    "dist": "liveserver.com"
   }
 }

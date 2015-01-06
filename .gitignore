@@ -13,3 +13,4 @@ settings.json
 chromeprofile/
 *.crx
 build/
+extensions/chrome/scripts/modules/config.js

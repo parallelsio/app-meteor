@@ -1,0 +1,3 @@
+define({
+  appRootUrl: '/* @echo APPROOTURL */'
+});
