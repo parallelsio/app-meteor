@@ -22,7 +22,8 @@ cd ..
 # Wait for Meteor to finish booting
 tail -f $METEOR_LOG | while read LOGLINE
 do
-   [[ "${LOGLINE}" == *"=> App running"* ]] && pkill -P $$ tail
+  echo "Line is $LOGLINE"
+   [[ $LOGLINE == *"=> App running"* ]] && pkill -P $$ tail
 done
 cd ../
 
