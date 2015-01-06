@@ -1,4 +1,4 @@
 define({
-  appRootUrl: '127.0.0.1:3000',
+  appRootUrl: 'parallels.meteor.com',
   webSocketUri: 'ws://localhost:3000/websocket'
 });
