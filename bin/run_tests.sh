@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SELENIUM_LOG=$(mktemp /tmp/selenium.XXXXXXXX)
 
