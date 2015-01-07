@@ -6,18 +6,16 @@ set password "$env(METEOR_PASSWORD)"
 
 cd meteor-app
 
-spawn meteor deploy --delete $env(METEOR_DEPLOY_URL)
+spawn meteor login
 
-expect -- "*Email:"
+expect -- "*Username: "
 send "$email\n"
-expect -- "*assword:"
+expect -- "*assword: "
 send -- "$password\n"
+expect -- "*Logged in as*"
+
+spawn meteor deploy --delete $env(METEOR_DEPLOY_URL)
 expect -- "Deleted."
 
 spawn meteor deploy $env(METEOR_DEPLOY_URL) --settings settings.json
-
-expect -- "*Email:"
-send "$email\n"
-expect -- "*assword:"
-send -- "$password\n"
 expect -- "*Now serving at $env(METEOR_DEPLOY_URL)"
