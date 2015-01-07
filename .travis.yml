@@ -15,7 +15,7 @@ before_install:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "cd meteor-app && MONGO_URL="mongodb://localhost:27017/parallels_test" meteor run --settings settings.json &"
+  - "cd meteor-app && MONGO_URL=\"mongodb://localhost:27017/parallels_test\" meteor run --settings settings.json &"
   - sleep 3
 
 addons:
