@@ -24,7 +24,7 @@ module.exports = function () {
     var cancelClipper = function () {
       self.browser.findElement({xpath: "//button[contains(@class, 'submit')]"}).click();
 
-      return self.browser.sleep(2000);
+      return self.browser.sleep(15000);
     };
 
     cancelClipper().then(callback);
