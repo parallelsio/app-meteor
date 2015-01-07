@@ -5,6 +5,6 @@
   "appRootUrl": {
     "local": "localhost:3000",
     "ci": "parallels-ci.meteor.com",
-    "dist": "parallels.com"
+    "dist": "parallels.meteor.com"
   }
 }
