@@ -2,7 +2,7 @@ function CanvasPage(world, callback) {
   var that = this;
 
   that.browser = world.browser;
-  that.parallelsUrl = "http://127.0.0.1:3000";
+  that.parallelsUrl = "http://parallels-ci.meteor.com";
   that.settings = world.settings;
 
   that.browser.getAllWindowHandles().then(function (handles) {
