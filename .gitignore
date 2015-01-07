@@ -3,13 +3,10 @@
 node_modules
 *.log
 build/chrome
-config.json
-/meteor-core/settings.json
 .npm/
 tmp
 .sass-cache/
 extensions/chrome/bower_components
-settings.json
 chromeprofile/
 *.crx
 build/

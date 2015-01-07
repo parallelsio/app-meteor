@@ -7,6 +7,7 @@ services:
   - mongodb
 
 before_install:
+  - sudo apt-get install expect
   - gem update --system
   - gem install compass
   - npm install -g grunt-cli bower
@@ -28,5 +29,13 @@ notifications:
   slack:
     secure: S6vA1tXv8LA4JuXnbJ/RkrKXYOeD5JUR/MwCA9rH4/6l/9IFDRKVs2TMJ7GJEwj92ql7+hx/e7xnkqMzghRF3crsk4Wsv1i1wmAYr+jvhdtDRcdeHcA/P1wVbQHoSAWBRDPC6BN4+0ICWmiJ6DLa8a8e7C6bRVQpQMjS77RhWBI=
 
+env:
+  global:
+    - METEOR_DEPLOY_URL=http://parallels-ci.meteor.com
+    - METEOR_EMAIL=angelcabo
+    - secure: "pKhVMFwr4+Yku5GyeNa+GITG9B58WMA+uyfejk+ioZakhNQ7fzaeDcL5hV1ZCUSRSgGY+vAiyhusgqCVFf9vgHNZhqqlRHOCw90GLwZlZtLj24vrmIbuc6lAoYlR6ytpeZT/Ao2IxCLajQNLqpn8dWqlRE82E4Fu6D6wWeWWyYc="
+
 script:
+  - "expect deploy.exp"
+  - "sleep 5"
   - grunt e2e-tests:ci

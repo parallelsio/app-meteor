@@ -4,7 +4,7 @@
   "chrome_ext": "extensions/chrome",
   "appRootUrl": {
     "local": "localhost:3000",
-    "ci": "testserver.com",
-    "dist": "liveserver.com"
+    "ci": "parallels-ci.meteor.com",
+    "dist": "parallels.com"
   }
 }
