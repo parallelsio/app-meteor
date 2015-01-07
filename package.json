@@ -17,6 +17,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-crx": "^0.3.4",
     "grunt-cucumber": "^0.2.3",
+    "grunt-env": "^0.4.2",
     "grunt-preprocess": "^4.1.0",
     "jshint-stylish": "^1.0.0",
     "matchdep": "^0.3.0",

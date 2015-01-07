@@ -237,6 +237,14 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    env : {
+      ci : {
+        PARALLELS_DOMAIN : 'parallels-ci.meteor.com'
+      },
+      local : {
+        PARALLELS_DOMAIN : '127.0.0.1:3000'
+      }
     }
   });
 
@@ -313,9 +321,9 @@ module.exports = function (grunt) {
     var tasks;
 
     if (target === 'ci') {
-      tasks = ['build:ci'];
+      tasks = ['env:ci', 'build:ci'];
     } else {
-      tasks = ['build:local'];
+      tasks = ['env:local', 'build:local'];
     }
 
     tasks = tasks.concat(['bgShell:resetTestDb', 'bgShell:e2e']);
