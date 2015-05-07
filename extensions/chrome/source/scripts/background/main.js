@@ -60,7 +60,11 @@ define(['browser', 'modules/server', 'lib/htmlParser/background/main'],
         nativeWidth: pageInfo.nativeWidth,
         nativeHeight: pageInfo.nativeHeight,
         createdAt: Date.now(),
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
+        position: {
+          x: 0,
+          y: 0
+        }
       };
 
       browser.saveLocal({'parallels:bits': localBits}, function () {

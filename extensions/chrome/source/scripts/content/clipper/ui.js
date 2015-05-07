@@ -43,7 +43,11 @@ define(['jquery', 'modules/messenger', 'jquery.tag-editor'], function ($, messen
       nativeHeight: data.nativeHeight,
       tags: [],
       context: null,
-      createdAt: new Date()
+      createdAt: new Date(),
+      position: {
+        x: 0,
+        y: 0
+      }
     };
 
     $('.bit-title').val(data.title);
