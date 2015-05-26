@@ -8,11 +8,17 @@
     * is enter/exit for this mode intuitive? shouldnt it be three?
       1. enter   2. cancel  3.  complete?
  */
+
+// OQ: Are these global vars?
+// TODO: to move these into mode, as object properties?
 var timeline, $bitOrigin;
 var line, updatedLine, lineContainer, params, two, mouse, circle;
 
 Parallels.AppModes['create-parallel'] = {
+
   enter: function () {
+    // TODO: refactor: isCreatingParallel is grabage, 
+    // overlapping duties with currentMode Session var
     Session.set('currentMode', 'create-parallel');
 
     var bitHoveringId = Session.get('bitHoveringId');
@@ -49,7 +55,6 @@ Parallels.AppModes['create-parallel'] = {
           // Session.set('isDrawingParallel', null);
           // Session.set('bitParallelCreateOriginId', null);
       });
-
 
       isCreatingParallel = true;
       var bitParallelCreateOriginId = bitHoveringId;
@@ -138,6 +143,7 @@ Parallels.AppModes['create-parallel'] = {
       // ****************** HEARTBEAT ANIMATION *************
       var timelineStart = function () {
         log.debug('bit:parallel:create. Origin bit' + bitParallelCreateOriginId + ': selected-loop animation starting ...');
+        // TODO: play sound indicating origin start, jeopardy jingle??
       };
 
       var timelineDone = function( bitOriginId ){
@@ -155,15 +161,7 @@ Parallels.AppModes['create-parallel'] = {
         .to($bitOrigin, 0.50, { scale: 1.05, ease:Expo.easeOut } )
         .to($bitOrigin, 0.5, { scale: 1, ease:Expo.easeOut } );
       // ****************** HEARTBEAT ANIMATION *************
-
-
-
-
     }
-
-    // play sound indicating origin start
-
-   
 
   },
 
@@ -193,7 +191,7 @@ Parallels.AppModes['create-parallel'] = {
       // reset vars for next create-parallel use
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
-      // TODO: remove the two instance. Very CPU drain as it keeps going
+      // TODO: remove the two instance. Very CPU drain as it drains on every re-init
 
       // put key commands back to normal
       Parallels.KeyCommands.bindAll();

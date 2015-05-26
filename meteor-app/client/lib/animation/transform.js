@@ -92,25 +92,13 @@ Transform = {
       }
 
       else if (direction === "contract"){
+        Session.set('bitThumbnailWidth', null);
+        Session.set('bitThumbnailHeight', null);
         Parallels.Audio.player.play('fx-temp-temp');
       }
     };
 
     var timelineDone = function( bitPreviewingId, direction ){
-
-      if (direction === "expand")
-      {
-        Session.set('bitPreviewingId', bitPreviewingId);
-      }
-
-      else if (direction === "contract")
-      {
-        bitPreviewingId = "";
-        Session.set('bitPreviewingId', null);
-        Session.set('bitThumbnailWidth', null);
-        Session.set('bitThumbnailHeight', null);
-      }
-
       log.debug("bit:preview:", bitPreviewingId, "tween done." );
     };
 

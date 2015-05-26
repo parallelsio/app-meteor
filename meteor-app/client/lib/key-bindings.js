@@ -2,7 +2,7 @@
 
   OQ: 
     * would binding 2x cause 2 listeners?
-    * how to pass contextMessage properly 
+    * how to pass contextMessage properly?
 
   TODO: 
     * add a check before each bind function
@@ -30,7 +30,6 @@ Parallels.KeyCommands = {
     Mousetrap.unbind('esc'); 
   },
 
-
   bindDelete: function(){
     log.debug("keyCommand:bindDelete");
 
@@ -49,6 +48,11 @@ Parallels.KeyCommands = {
           }
         });
       }
+      
+      else {
+        log.debug ('delete key ignored, not captured for a specific bit')
+      }
+
     });
   },
 
@@ -57,6 +61,8 @@ Parallels.KeyCommands = {
 
     Mousetrap.bind('space', function (event) {
       log.debug("pressed 'Space' key");
+      var bitHoveringId = Session.get('bitHoveringId');
+      var bitPreviewingId = Session.get('bitPreviewingId');
 
       try {
         event.stopPropagation();
@@ -68,7 +74,18 @@ Parallels.KeyCommands = {
         */
       }
 
-      Parallels.AppModes['preview-bit'].enter();
+      if (bitPreviewingId) { 
+        log.debug("already preview bit: ", bitPreviewingId);
+        return false; // failcheck - end if we're somehow already previewing
+      }
+      
+      if (bitHoveringId) {
+        Parallels.AppModes['preview-bit'].enter();
+      }
+
+      else{
+        log.debug ('space key ignored, not captured for a specific bit')
+      }
     });
   },
 
