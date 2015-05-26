@@ -1,7 +1,11 @@
 Meteor.startup(function(){
-
-  Parallels.Audio.player.init();
   log.debug("Meteor.startup begin.");
+
+  Parallels.KeyCommands.bindAll();
+  Parallels.Audio.player.init();
+
+  // TODO: make Session bootup/init?
+  Session.set('newTextBit', null);
 
   Tracker.autorun(function() {
     log.debug(Bits.find().count() + ' bits, via Tracker:autorun');
@@ -10,7 +14,5 @@ Meteor.startup(function(){
   Tracker.autorun(function() {
     log.debug('Session:bitHoveringId is now: ', Session.get("bitHoveringId"), ', via Tracker:autorun');
   });
-
-  Session.set('newTextBit', null);
 
 });

@@ -6,7 +6,8 @@ Parallels.AppModes['preview-bit'] = {
     var bitHoveringId = Session.get('bitHoveringId');
     var bitPreviewingId = Session.get('bitPreviewingId');
 
-    if (bitHoveringId) {
+    if (bitHoveringId)
+    {
       log.debug("triggered preview over bit: ", bitHoveringId);
 
       var $bit = $("[data-id='" + bitHoveringId + "']");
@@ -39,7 +40,6 @@ Parallels.AppModes['preview-bit'] = {
       log.debug ('space key ignored, not captured for a specific bit')
     }
   },
-  
   exit: function () {
     Session.set('currentMode', null);
     log.debug("mode:preview-bit:exit");

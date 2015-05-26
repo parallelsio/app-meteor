@@ -83,6 +83,8 @@ Template.bit.onRendered(function (){
   // // http://greensock.com/docs/#/HTML5/GSAP/Utils/Draggable
   Draggable.create(Template.instance().firstNode, {
 
+    // TODO: unbind keys
+
     throwProps:false,
     zIndexBoost:false,
 

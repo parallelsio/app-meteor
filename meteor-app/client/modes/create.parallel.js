@@ -1,13 +1,3 @@
-function getRandomColor() {
-  return 'rgb('
-    + Math.floor(Math.random() * 255) + ','
-    + Math.floor(Math.random() * 255) + ','
-    + Math.floor(Math.random() * 255) + ')';
-}
-var timeline, $bitOrigin;
-var line, updatedLine, lineContainer, params, two, mouse, circle;
-
-
 /*
   TODO:
     * syncronize multiple bits heartbeat animation
@@ -18,6 +8,8 @@ var line, updatedLine, lineContainer, params, two, mouse, circle;
     * is enter/exit for this mode intuitive? shouldnt it be three?
       1. enter   2. cancel  3.  complete?
  */
+var timeline, $bitOrigin;
+var line, updatedLine, lineContainer, params, two, mouse, circle;
 
 Parallels.AppModes['create-parallel'] = {
   enter: function () {
@@ -28,30 +20,34 @@ Parallels.AppModes['create-parallel'] = {
 
     if(bitHoveringId && (!isCreatingParallel))
     {
-      // ****************** PREPARE KEY COMMANDS **********************
-      // Disable keys that are inappropriate here,
-      // Re-init them on exit Parallel mode
-      // TODO: Parallels.keyCommands.disableAll function?
-      // TODO: Parallels.keyCommands.disableAllExcept function?
-      Mousetrap.unbind('d'); 
-      // Mousetrap.unbind('space'); 
-      Mousetrap.unbind('shift'); 
+      Parallels.KeyCommands.disableAll();
+      Parallels.KeyCommands.bindEsc();
 
-      Mousetrap.bind('shift', function (){
-        log.debug("pressed 'Shift' key, during mode:create-parallel");
+      // re-binding Shift, so if person hits it again,
+      // we know they are have chosen a destination bit
+      // and ready to commit this to the db/UI.
+      
+      // OQ: we pass this context message to the handler, but getting the keyboard event?
+      // Parallels.KeyCommands.bindShift("closing a parallel");
 
-        try {
-          event.stopPropagation();
-          event.preventDefault();
-          
-          // close it off
-          log.debug("show form here");
-        }
-        catch (err) {
-          /*  Try/Catch is here for integration tests:
-              https://github.com/ccampbell/mousetrap/issues/257
-          */
-        }
+      Mousetrap.bind('shift', function (contextMessage){
+        log.debug("pressed 'Shift' key for closing parallel");
+        Parallels.AppModes['create-parallel'].enter();
+
+        // if were hovering on a bit other than origin
+
+        // play spark animation
+
+        // save destination bit id to session
+      
+        // play yay sound
+
+        // call neo4j save
+
+        // show form, allow person to continue, escape rids form
+
+          // Session.set('isDrawingParallel', null);
+          // Session.set('bitParallelCreateOriginId', null);
       });
 
 
@@ -75,10 +71,7 @@ Parallels.AppModes['create-parallel'] = {
       $bitOrigin.addClass('create-parallel--origin');
 
       // TODO:
-      // disable events
       // try bg overlay over other bits too?
-      // disable scrolling
-
 
       // ****************** RENDER LINE *************
       // set up an SVG container via two.js container to draw the line stroke
@@ -112,10 +105,11 @@ Parallels.AppModes['create-parallel'] = {
 
       circle.noStroke().fill = 'blue';
 
-      // by passing the circle.translation into the origin 
-      // two.js automatically data binds the line,
-      // so whenever the circle updates in .bind below,
-      // line destination updates too.
+      // By passing the circle.translation into the origin 
+      // two.js automatically data binds the line (via Backbone
+      // underneath it's hood). Whenever the data properties for 
+      // circle updates in .bind below, the line destination data
+      // (as an anchor/vector), updates too
       // https://github.com/jonobr1/two.js/issues/133
       var line = new Two.Polygon([
               circle.translation, // origin
@@ -169,23 +163,7 @@ Parallels.AppModes['create-parallel'] = {
 
     // play sound indicating origin start
 
-    // set up bind shift key again, to complete parallel connection
-    // in callback:
-
-      // if were hovering on a bit other than origin
-
-      // // play spark animation
-
-      // save destination bit id to session
-    
-      // play yay sound
-
-      // call neo4j save
-
-      // show form, allow person to continue, escape rids form
-
-              // Session.set('isDrawingParallel', null);
-        // Session.set('bitParallelCreateOriginId', null);
+   
 
   },
 
@@ -212,21 +190,13 @@ Parallels.AppModes['create-parallel'] = {
       // stop drawing parallel line
       two.unbind('update');
 
-      // reset vars for next use
+      // reset vars for next create-parallel use
       lineContainer, params, two, mouse, updatedLine, line, circle = null;
 
       // TODO: remove the two instance. Very CPU drain as it keeps going
 
-      // rebind the shift key back 'to normal'
-      // this is a copy of the code in lib/key-bindings.js
-      // TODO: how to reuse, so the 2 functions stay in sync?
-      // Do we need a Parallels.KeyCommand?
-      Mousetrap.bind('shift', function (){
-        log.debug("pressed 'Shift' key");
-        Parallels.AppModes['create-parallel'].enter();
-      });
-
-      Parallels.KeyCommands.bindDelete();
+      // put key commands back to normal
+      Parallels.KeyCommands.bindAll();
               
       log.debug('parallel:create: exit mode');
     }

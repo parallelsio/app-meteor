@@ -1,7 +1,38 @@
+/*
+
+  OQ: 
+    * would binding 2x cause 2 listeners?
+    * how to pass contextMessage properly 
+
+  TODO: 
+    * add a check before each bind function
+      to ensure it doesnt already exist.
+
+*/
+
 Parallels.KeyCommands = {
   
-  bindDelete: function(command){
-    log.debug("keyCommand:bind", command);
+  bindAll: function(){
+    log.debug("keyCommand:bindAll");
+
+    this.bindDelete("via all");
+    this.bindShift("via all");
+    this.bindSpace("via all");
+    this.bindEsc("via all");
+  },
+
+  disableAll: function(){
+    log.debug("keyCommand:disableAll");
+
+    Mousetrap.unbind('d'); 
+    Mousetrap.unbind('space'); 
+    Mousetrap.unbind('shift'); 
+    Mousetrap.unbind('esc'); 
+  },
+
+
+  bindDelete: function(){
+    log.debug("keyCommand:bindDelete");
 
     Mousetrap.bind("d", function() {
       log.debug("pressed 'd' key");
@@ -19,50 +50,50 @@ Parallels.KeyCommands = {
         });
       }
     });
+  },
+
+  bindSpace: function(){
+    log.debug("keyCommand:bindSpace");
+
+    Mousetrap.bind('space', function (event) {
+      log.debug("pressed 'Space' key");
+
+      try {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      catch (err) {
+        /*  Try/Catch is here for integration tests:
+            https://github.com/ccampbell/mousetrap/issues/257
+        */
+      }
+
+      Parallels.AppModes['preview-bit'].enter();
+    });
+  },
+
+  bindShift: function(contextMessage){
+    var contextMessage = contextMessage || "";
+    log.debug("keyCommand:bindShift");
+
+    // OQ: this strategy of passing the contextMessage isnt working
+    Mousetrap.bind('shift', function (contextMessage){
+      log.debug("pressed 'Shift' key : ", contextMessage);
+      Parallels.AppModes['create-parallel'].enter();
+    });
+  },
+
+  bindEsc: function(){
+    log.debug("keyCommand:bindEsc");
+    
+    Mousetrap.bindGlobal('esc', function() {
+      log.debug("pressed 'Esc' key");
+      var currentMode = Session.get('currentMode');
+
+      if (!currentMode) return;
+      Parallels.AppModes[currentMode].exit();
+    });
   }
+
 };
 
- 
-
-
-
-
-Meteor.startup(function() {
-
-  // **********************************************
-  Mousetrap.bind('space', function (event) {
-    log.debug("pressed 'Space' key");
-
-    try {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-    catch (err) {
-      /*  Try/Catch is here for integration tests:
-          https://github.com/ccampbell/mousetrap/issues/257
-      */
-    }
-
-    Parallels.AppModes['preview-bit'].enter();
-  });
-
-  // **********************************************
-  Mousetrap.bind('shift', function (){
-    log.debug("pressed 'Shift' key");
-    Parallels.AppModes['create-parallel'].enter();
-  });
-
-  // **********************************************
-  Mousetrap.bindGlobal('esc', function() {
-    log.debug("pressed 'Esc' key");
-    var currentMode = Session.get('currentMode');
-
-    if (!currentMode) return;
-    Parallels.AppModes[currentMode].exit();
-  });
-
-  // **********************************************
-  
-  Parallels.KeyCommands.bindDelete();
-
-});

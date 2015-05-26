@@ -19,10 +19,9 @@ Utilities = {
     return $(bitHtmlElement).data('id');
   },
 
-
-
-
-  // *************** GENERAL ****************
+  /* 
+      GENERAL 
+  */ 
   getClass: function(object){
     // http://phpjs.org/functions/getClass
     // http://kevin.vanzonneveld.net
@@ -60,7 +59,14 @@ Utilities = {
     }
 
     return false;
-  }
+  },
 
+
+  getRandomColor: function() {
+    return 'rgb('
+      + Math.floor(Math.random() * 255) + ','
+      + Math.floor(Math.random() * 255) + ','
+      + Math.floor(Math.random() * 255) + ')';
+  }
 
 };
