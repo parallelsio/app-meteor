@@ -85,7 +85,21 @@ Parallels.Audio.Definition['fx-cha-ching'] = {
     inputs: {
       buffer: {
         id: "fx-cha-ching",  
-        url: "/sounds/fx-cha-ching.mp3"
+        url: "/sounds/fx-cha-ching.wav"
+      },
+      mul: 0.1
+    }
+  }
+}
+
+Parallels.Audio.Definition['fx-ping-2x'] = {
+  synthDef: {   
+    id: "fx-ping-2x",  
+    ugen: "flock.ugen.playBuffer",
+    inputs: {
+      buffer: {
+        id: "fx-ping-2x",  
+        url: "/sounds/fx-ping-2x.wav"
       },
       mul: 0.1
     }
