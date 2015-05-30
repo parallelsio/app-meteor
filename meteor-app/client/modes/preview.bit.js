@@ -1,29 +1,21 @@
+var 
+  bitHoveringId,
+  $bit,
+  bitTemplate,
+  bitData,
+  bitPreviewingId;
 
 Parallels.AppModes['preview-bit'] = {
 
-  initVars: function(){
-    // OQ: no scope for this function inside of enter/exit functions?
-    // OQ: is this the right place to put this?
-    // some of the session getting/setting is happening outside of the mode,
-    // for example, in the binding of the Space bar key
-    // TODO: make consistent across modes
-    // var bitHoveringId = Session.get('bitHoveringId');
-    // var $bit = $("[data-id='" + bitHoveringId + "']");
-    // var bitTemplate = Blaze.getView($bit[0]);
-    // var bitData = Blaze.getData(bitTemplate);
-    // var bitPreviewingId = Session.get('bitPreviewingId');
-  },
-
   enter: function () {
-    log.debug("mode:preview-bit:enter");
-    var bitHoveringId = Session.get('bitHoveringId');
-    var $bit = $("[data-id='" + bitHoveringId + "']");
-    var bitTemplate = Blaze.getView($bit[0]);
-    var bitData = Blaze.getData(bitTemplate);
-    var bitPreviewingId = bitHoveringId;
+    bitHoveringId = Session.get('bitHoveringId');
+    $bit = $("[data-id='" + bitHoveringId + "']");
+    bitTemplate = Blaze.getView($bit[0]);
+    bitData = Blaze.getData(bitTemplate);
+    bitPreviewingId = bitHoveringId;
     Session.set('currentMode', 'preview-bit');
     Session.set('bitPreviewingId', bitPreviewingId);
-    log.debug("mode:preview-bit: ", bitPreviewingId);
+    log.debug("mode:preview-bit:enter ", bitPreviewingId);
     
     // TODO: disable bitHover too
 
@@ -32,11 +24,18 @@ Parallels.AppModes['preview-bit'] = {
     if ((bitData.type === "image") || (bitData.type === "webpage")){
       log.debug("bit:image:preview: " + bitHoveringId);
 
-      // nothing is being previewed currently, expand the image
       Parallels.KeyCommands.disableAll();
       Parallels.KeyCommands.bindEsc();
 
-      Transform.scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "expand");
+      var options = {
+        bitData: bitData,
+        bitHoveringId: bitHoveringId,
+        $bit: $bit,
+        bitTemplate: bitTemplate,
+        direction: "expand"
+      };
+
+      Transform.scaleImage(options);
     }
 
     else {
@@ -48,6 +47,7 @@ Parallels.AppModes['preview-bit'] = {
 
     log.debug("mode:preview-bit:exit");
 
+    // refactor: get rid of dep on these vars.
     var bitHoveringId = Session.get('bitHoveringId');
     var $bit = $("[data-id='" + bitHoveringId + "']");
     var bitTemplate = Blaze.getView($bit[0]);
@@ -56,13 +56,24 @@ Parallels.AppModes['preview-bit'] = {
 
     if (bitPreviewingId)
     {
-      // OQ: what's the right place to reset the session?
-      // is it on Greensock animate complete? If so, how do we send this into ScaleImage function?
+
+      // TODO: pass the assignment/resetting of these 
+      // into Transform.scale,
+      // which will then reset it once the animation complete callback is triggered
+      // this will avoid potential edge cases where person takes
+      // action in between animations 
       Session.set('currentMode', null);
       Session.set('bitPreviewingId', null);
 
-      // close/restore to thumbnail size
-      Transform.scaleImage(bitData, bitHoveringId, $bit, bitTemplate, "contract");
+      var options = {
+        bitData: bitData,
+        bitHoveringId: bitHoveringId,
+        $bit: $bit,
+        bitTemplate: bitTemplate,
+        direction: "contract"
+      };
+
+      Transform.scaleImage(options);
 
       Parallels.KeyCommands.bindAll();
     }

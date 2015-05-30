@@ -34,27 +34,27 @@ Parallels.AppModes['create-parallel'] = {
       // and ready to commit this to the db/UI.
       
       // OQ: we pass this context message to the handler, but getting the keyboard event?
-      // Parallels.KeyCommands.bindShift("closing a parallel");
+      Parallels.KeyCommands.bindShift("closing a parallel");
 
-      Mousetrap.bind('shift', function (contextMessage){
-        log.debug("pressed 'Shift' key for closing parallel");
-        Parallels.AppModes['create-parallel'].enter();
-
-        // if were hovering on a bit other than origin
-
-        // play spark animation
-
-        // save destination bit id to session
+      // Mousetrap.bind('shift', function (contextMessage){
+      //   log.debug("pressed 'Shift' key for closing parallel");
       
-        // play yay sound
 
-        // call neo4j save
+      //   // if were hovering on a bit other than origin
 
-        // show form, allow person to continue, escape rids form
+      //   // play spark animation
 
-          // Session.set('isDrawingParallel', null);
-          // Session.set('bitParallelCreateOriginId', null);
-      });
+      //   // save destination bit id to session
+      
+      //   // play yay sound
+
+      //   // call neo4j save
+
+      //   // show form, allow person to continue, escape rids form
+
+      //     // Session.set('isDrawingParallel', null);
+      //     // Session.set('bitParallelCreateOriginId', null);
+      // });
 
       isCreatingParallel = true;
       var bitParallelCreateOriginId = bitHoveringId;

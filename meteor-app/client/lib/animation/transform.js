@@ -1,8 +1,16 @@
+/*
+      TODO: pass one bit object, get the other things from it, 
+      versus passing 3 diff parts of similar objects
+      
+      TODO: refactor: remove bitPrevieweingId, combine bit references, 
+      and dont go to Session store for original H/W
+  */
+
 Transform = {
+  
+  scaleImage: function(options){
 
-  scaleImage: function(bitData, bitPreviewingId, $bit, bitTemplate, direction){
-
-    var $bitImg = $(bitTemplate.templateInstance().$('img'));
+    var $bitImg = $(options.bitTemplate.templateInstance().$('img'));
 
     var bitThumbnailHeight = $bitImg.height();
     var bitThumbnailWidth = $bitImg.width();
@@ -20,7 +28,7 @@ Transform = {
 
     // when expanding, we try to make the image use up most of the viewport space to preview
     // and save the image's thumbnail height+width in a session var
-    if (direction === "expand")
+    if (options.direction === "expand")
     {
       // padding for top and bottom, in pixels
       var edgePadding = 10;
@@ -35,7 +43,7 @@ Transform = {
       // use freeHeight to determine how to preview
       // TODO: use height + width, for cases where height fits nicely
       // in the viewport, but image is very wide, wider than viewport
-      if ((bitData.nativeHeight > bitThumbnailHeight) &&
+      if ((options.bitData.nativeHeight > bitThumbnailHeight) &&
           (bitThumbnailHeight <= freeHeight)) {
 
         var previewHeight = freeHeight;
@@ -47,12 +55,11 @@ Transform = {
             -------------  =  ----------------
              nativeWidth       x (previewWidth)
         */
-        var previewWidth = Math.floor((bitData.nativeWidth * previewHeight) / bitData.nativeHeight);
+        var previewWidth = Math.floor((options.bitData.nativeWidth * previewHeight) / options.bitData.nativeHeight);
 
         toWidth = previewWidth;
         toHeight = previewHeight;
         easeType = Expo.easeOut;
-
       }
     }
 
@@ -60,14 +67,14 @@ Transform = {
     // like gravity is at play. We use the original thumbnail height + width,
     // as our destination height + width, saved to the session when we expanded,
     // and clear these vars when finished
-    else if (direction === "contract")
+    else if (options.direction === "contract")
     {
       toWidth = Session.get('bitThumbnailWidth');
       toHeight = Session.get('bitThumbnailHeight');
       easeType = Elastic.easeOut.config(2, 0.4)
     }
 
-    var options = {
+    var animationOptions = {
       width: toWidth,
       height: toHeight,
       scale: 1,
@@ -85,13 +92,13 @@ Transform = {
 
       // TODO: disable bit actions (drag, delete)
 
-      if (direction === "expand") {
+      if (options.direction === "expand") {
         Session.set('bitThumbnailHeight', bitThumbnailHeight);
         Session.set('bitThumbnailWidth', bitThumbnailWidth);
         Parallels.Audio.player.play('fx-quad-ripple');
       }
 
-      else if (direction === "contract"){
+      else if (options.direction === "contract"){
         Session.set('bitThumbnailWidth', null);
         Session.set('bitThumbnailHeight', null);
         Parallels.Audio.player.play('fx-temp-temp');
@@ -99,19 +106,19 @@ Transform = {
     };
 
     var timelineDone = function( bitPreviewingId, direction ){
-      log.debug("bit:preview:", bitPreviewingId, "tween done." );
+      log.debug("bit:preview:", bitPreviewingId, " : " , direction, " : tween done." );
     };
 
     var timeline = new TimelineMax({
       onStart: timelineStart,
       onComplete: timelineDone,
-      onCompleteParams:[ bitPreviewingId, direction ]
+      onCompleteParams:[ options.bitPreviewingId, options.direction ]
     });
 
     // run the animations.
     // the settings and sequencing is inspired by the Zelda 'wipes'
     // https://www.youtube.com/watch?v=wHaZrYX0kAU&t=14m54s
-    if (direction === "expand")
+    if (options.direction === "expand")
     {
       log.debug("expanding...");
 
@@ -122,16 +129,16 @@ Transform = {
 
         // TODO: this wont be needed after on hover, bit swaps to top of
         // z-index stack
-        .set($($bit), { zIndex: 10 })
+        .set(options.$bit, { zIndex: 10 })
 
         // TODO: move/center viewport around the image
 
         // blow up image from thumbnail size up to fit the viewport height
         .to($bitImg, 0.10, { scale: 0.9, ease:Quint.easeOut } )
-        .to($bitImg, 0.25, options );
+        .to($bitImg, 0.25, animationOptions );
     }
 
-    else if (direction === "contract")
+    else if (options.direction === "contract")
     {
       log.debug("contracting...");
 
@@ -142,9 +149,9 @@ Transform = {
 
         // contract image from viewport height down to original thumbnail size
         .to($bitImg, 0.10, { scale: 1.1, ease:Quint.easeOut } )
-        .to($bitImg, 0.25, options )
+        .to($bitImg, 0.25, animationOptions )
 
-        .set($($bit), { zIndex: 1 })
+        .set(options.$bit, { zIndex: 1 })
         .set($('.wipe.bit-preview.side-to-side'), { alpha: 0, display: "none" });
     }
   }
