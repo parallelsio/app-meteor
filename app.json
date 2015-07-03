@@ -1,0 +1,27 @@
+{
+  "name":"core-modules",
+  "description":"",
+  "scripts":{},
+  "env":{
+    "AWS_ACCESS_KEY_ID":{
+      "required":true
+    },
+    "AWS_BUCKET":{
+      "required":true
+    },
+    "AWS_SECRET_ACCESS_KEY":{
+      "required":true
+    },
+    "METEOR_SETTINGS":{
+      "required":true
+    },
+    "ROOT_URL":{
+      "required":true
+    }
+  },
+  "addons":[
+    "graphenedb",
+    "mongolab",
+    "newrelic"
+  ]
+}
