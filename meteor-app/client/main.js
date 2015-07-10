@@ -4,9 +4,9 @@ Meteor.startup(function(){
 
   Parallels.Keys.bindAll();
 
-  Meteor.call('getSetting', 'isAudioEnabled', function (err, isAudioEnabled) {
-    if (isAudioEnabled){
-      Parallels.Audio.player.play("fx-welcome-v1.wav");
+  Meteor.call('getSetting', 'isFlockingAudioEnabled', function (err, displayIntroAnimation) {
+    if (isFlockingAudioEnabled){
+      Parallels.Audio.player.initAndStartEnv();
     }
   });
 

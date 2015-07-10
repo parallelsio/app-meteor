@@ -15,12 +15,18 @@ Package.onUse(function(api) {
 
   api.use([
     "parallels-core@0.0.1",
-    "ovcharik:howler",
     "lifeinchords:teoria@0.0.1"
   ], 'client', { weak: false, unordered: false });
 
   api.addFiles([
     'namespace.js',
+    'definitions/ah.js',
+    'definitions/elastic-stretch.js',
+    'definitions/impulse-drop.js',
+    'definitions/moog-seq.js',
+    'definitions/sample-fx.js',
+    'definitions/tink.js',
+    'definitions/twin-pipes.js',
     'actions.js'
   ], 'client');
 });
