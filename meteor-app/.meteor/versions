@@ -61,7 +61,6 @@ npm-container@1.0.0
 observe-sequence@1.0.6
 ordered-dict@1.0.3
 ostrio:neo4jdriver@0.2.15
-ovcharik:howler@1.1.26
 parallels-animation@0.0.1
 parallels-audio@0.0.1
 parallels-canvas-manager@0.0.1
