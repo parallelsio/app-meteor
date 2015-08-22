@@ -1,49 +1,223 @@
-$ui-header-height: 0.2em;
+// TODO: refactor out inheritance:
+// from:  .bit.text .bit__content { }
+// to:    .bit-text__content { }
+
+// ******************** ALL BITS *************
 
 .bit {
   display: none; // hide bits by default when map loads: animation functions display them 
   position: absolute;
   -webkit-font-smoothing: antialiased;
   outline: none;
+  // border: 2px solid transparent;
+}
 
-  // ************** base ************    
-  .ui-widget-header {
-    display: none;
-    position: absolute;
-  }
+.bit__content{
+  position: relative;
+  z-index: 2; // should be above the hovered .bit__drag-handle
+}
+
+.bit__drag-handle {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.bit--selected {
+  // border-color: transparent;
+  // box-shadow: 0 0 0 2px blue;
+}
+
+.hovering .bit__drag-handle {
+  display: block;
+  width: 100%;
+  background-color: #C6CED8;
+  backface-visibility: hidden;
+  cursor: move;
+}
 
 
-  // ******** subclasses (type image, text) ************    
-  &.text {
-    padding: 0.1em;
-    background-color: white;
-  }
 
-  &.editing .content,
-  &.text .content {
-    padding: 1em;
-    background-color: #fff;
-  }
+// ************** text bits 
 
-  &.image img {
-    width: 200px;
-  }
+.bit.text .bit__content {
+  background: white;
+  padding: 1.25em;
+  min-height: 65px;
+  min-width: 140px;
+}
 
 
 
-  // ************ states ***********
-  &.hovering .ui-widget-header {
-    display: block;
-    top: -$ui-header-height;
-    height: $ui-header-height;
-    width: 100%;
-    background-color: #3C9FFF;
-    cursor: move;
-  }
+.bit.text.hovering .bit__drag-handle{
 
-  &.create-parallel--origin { border: 0.4em solid yellow; }  
+  height: 70vh;
+  top: -20vh;
+
+  // http://uigradients.com/#Earthly
+  background: -webkit-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* IE10 */
+  background:      -o-linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* Opera 11.10+ */
+  background:         linear-gradient(180deg, #85D2B5 10%, #DBD5A4 90%); /* W3C */ 
 
 }
+
+.bit__controls{
+  position: absolute;
+  display: none;
+  text-align: center;
+  width:100%;  
+  z-index: 2;
+}
+
+
+.bit__controls-persistent{
+  z-index: 2;
+  top: -3em;
+
+}
+
+.bit__controls-edit{
+}
+
+.controls__icon{
+  display: inline-block;
+  height: 2.5em;
+  padding: 0 .75em;
+  font-size: 1.25em;
+  width: 2.5em;
+  line-height: 2.5em;
+  color: #8a8a8a;
+}
+
+.controls__icon:hover{
+  background-color: #3C9FFF; 
+  color: white;
+  opacity: 0.75;
+}
+
+
+
+.bit__resize{
+  position: absolute;
+
+  // Jquery Resize UI automatically adds display:inline. 
+  // Since we are manually show/hiding this handle (vs using Jquery 'autohide' param)
+  // we need to use important, to make this is hidden until
+  // text bit is double clicked to edit. Then, we'll display this resize handle
+  display: none ; 
+
+  bottom: -1px;
+  right: -1px;
+  height: 0; 
+  width: 0; 
+
+  height: 30px;
+  width: 30px;
+  z-index: 1000;
+}
+
+.bit__resize__triangle-icon{
+  position: absolute;
+  display: block;
+
+  bottom: 0;
+  right: 0;
+  height: 0; 
+
+  height: 20px;
+  width: 20px;
+
+  border-top: 20px solid transparent;
+  border-right:20px solid #3C9FFF; 
+
+  // margin: -15px;
+
+}
+
+
+.bit--editing {
+  outline: none;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+
+
+
+// ******************** SKETCH BITS *************
+
+
+.bit.sketch.hovering .bit__drag-handle{
+  height: 100vh;
+  top: -25vh;
+  left: 80px;
+
+  // adapted from uigradients.com/Reef
+  background: -webkit-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: -moz-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: -ms-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: -o-linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+  background: linear-gradient(180deg, #00D2FF 10%, #5D90E8 90%);
+
+  // adapted from uigradients.com/Reef
+  // background: -webkit-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* Chrome 10+, Saf5.1+ */
+  // background:    -moz-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* FF3.6+ */
+  // background:     -ms-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* IE10 */
+  // background:      -o-linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* Opera 11.10+ */
+  // background:         linear-gradient(0deg, #00D2FF 10%, #6C71F3 90%); /* W3C */
+
+  // adapted from uigradients.com/Influenza
+  // background: -webkit-linear-gradient(0deg, #C04848 10%, #480048 90%); /* Chrome 10+, Saf5.1+ */
+  // background:    -moz-linear-gradient(0deg, #C04848 10%, #480048 90%); /* FF3.6+ */
+  // background:     -ms-linear-gradient(0deg, #C04848 10%, #480048 90%); /* IE10 */
+  // background:      -o-linear-gradient(0deg, #C04848 10%, #480048 90%); /* Opera 11.10+ */
+  // background:         linear-gradient(0deg, #C04848 10%, #480048 90%); /* W3C */
+}
+
+
+/*
+  Binds the HTML Dom element to the JS drawing engine via ploma.js.
+  Doesn't need to be seen by person,
+  but can't be hidden, as then JS lib can't attach to it.
+  Since different browsers render the object element
+  in different ways, the easiest thing is to just
+  make it have no h/w
+*/
+#wtPlugin{
+  width:0;
+  height:0;
+}
+
+
+
+// ******************** IMAGE BITS *************
+
+.bit.image img  {
+  width: 200px;
+}
+
+
+.bit.image.hovering .bit__drag-handle {
+  height: 70vh;
+  top: -20vh;
+  
+  // adapted from uigradients.com/Influenza
+  background: -webkit-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* IE10 */
+  background:      -o-linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* Opera 11.10+ */
+  background:         linear-gradient(0deg, #DE6262 10%, #FFB88C 90%); /* W3C */  
+}
+
+
+.bit.image .controls__icon-delete:hover{
+  background-color: #f9ffb7; 
+  color: #8a8a8a;
+}
+
 
 // file upload animation
 @mixin keyframes($name) {
@@ -150,6 +324,7 @@ $ui-header-height: 0.2em;
   :not(.processing) .progress {
     @include prefix((animation: pulse 6s ease infinite));
   }
+
   .progress {
     position: absolute;
     overflow: hidden;
@@ -219,34 +394,6 @@ $ui-header-height: 0.2em;
   }
 }
 
-/*
-  Binds the HTML Dom element to the JS drawing engine via ploma.js.
-  Doesn't need to be seen by person,
-  but can't be hidden, as then JS lib can't attach to it.
-  Since different browsers render the object element
-  in different ways, the easiest thing is to just
-  make it have no h/w
-*/
-#wtPlugin{
-  width:0;
-  height:0;
-}
 
-// via https://sunpig.com/martin/2010/02/10/marching-ants-in-css/
-// https://sunpig.com/martin/code/2010/marchingants/marchingants.html
-// .marching-ants-border {
-//   -webkit-animation-name: march-up;
-//   -webkit-animation-duration: 0.3s;
-//   -webkit-animation-iteration-count: infinite;
-//   -webkit-animation-timing-function: linear;
-// }
 
-// @-webkit-keyframes march-up {
-//   from {
-//     background-position-y: 0.6em;
-//   }
-//   to {
-//     background-position-y: 0;
-//   }
-// }
 

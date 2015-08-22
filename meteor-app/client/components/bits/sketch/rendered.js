@@ -40,8 +40,8 @@ Template.sketchBit.onRendered(function () {
   });
 
 
-  // isFocused() checks to see if Session.get("bitEditingId") is set to this sketch.
-  // As the bitEditingId changes we need to ensure our code checks to see if it's now in focus for drawing.
+  // isFocused() checks to see if Session.get("sketchBitEditingId") is set to this sketch.
+  // As the sketchBitEditingId changes we need to ensure our code checks to see if it's now in focus for drawing.
   Tracker.autorun(function () {
     if (sketchBit.isFocused() && !sketchBit.drawingEnabled) {
       draggable[0].disable(); // should not be able to drag the bit while editing
@@ -74,7 +74,7 @@ Template.sketchBit.onRendered(function () {
   });
 
   mousetrap.bind('e', function () {
-    Session.set('bitEditingId', sketchBit._id);
+    Session.set('textBitEditingId', sketchBit._id);
   });
 
   mousetrap.bind('up', function (event) {
@@ -121,7 +121,7 @@ Template.sketchBit.onRendered(function () {
     if (sketchBit.isFocused()) {
       sketchBit.ploma.setStrokes(sketchBit.content);
       event.stopPropagation();
-      Session.set('bitEditingId', null);
+      Session.set('sketchBitEditingId', null);
     }
   });
 });

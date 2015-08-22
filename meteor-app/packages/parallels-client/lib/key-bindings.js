@@ -39,7 +39,6 @@ Parallels.Keys = {
 
     // edit text bit
     Mousetrap.unbind('e');
-    Mousetrap.unbind('e');
 
     // preview
     Mousetrap.unbind('space');
@@ -181,55 +180,43 @@ Parallels.Keys = {
         }
       }, function (err, bit) {
         if (!err) {
-          Session.set('bitEditingId', bit._id);
+          Session.set('sketchBitEditingId', bit._id);
         }
       });
     });
   },
 
   bindCreateTextBit: function () {
-    Parallels.log.debug("keyCommand:bindCreateTextBit");
-
-    Mousetrap.bind('t', function () {
-      Meteor.call('changeState', {
-        command: 'createBit',
-        data: {
-          canvasId: Session.get('canvasId'),
-          type: 'text',
-          content: '',
-          color: 'white',
-          position: pointerPosition
-        }
-      }, function (err, bit) {
-        if (!err) {
-          Session.set('bitEditingId', bit._id);
-        }
-      });
-    });
+    // TODO: 
   },
 
   bindEditTextBit: function () {
-    Parallels.log.debug("keyCommand:bindEditTextBit");
+    // Parallels.log.debug("keyCommand:bindEditTextBit");
 
-    Mousetrap.bind("e", function () {
-      Parallels.log.debug("pressed 'e' key");
+    // Mousetrap.bind("e", function () {
+    //   Parallels.log.debug("pressed 'e' key");
 
-      var bitHoveringId = Session.get('bitHoveringId');
-      if (bitHoveringId) {
-        Parallels.Audio.player.play('fx-temp-temp-subtle');
-        var bitTemplate = Utilities.getBitTemplate(bitHoveringId);
-        var bitData = Blaze.getData(bitTemplate);
-        if (bitData.type === "text") {
-          Session.set('bitEditingId', bitHoveringId);
-        }
-        else {
-          Parallels.log.debug("bit:edit: bit not of type 'text'.");
-        }
-      }
-      else {
-        Parallels.log.debug('edit key ignored, not captured for a specific bit')
-      }
-    });
+    //   var bitHoveringId = Session.get('bitHoveringId');
+
+    //   if (bitHoveringId) {
+    //     var bitTemplate = Utilities.getBitTemplate(bitHoveringId);
+    //     var bitData = Blaze.getData(bitTemplate);
+    //     var $bitElement = Utilities.getBitElement(bitHoveringId);
+
+    //     if (bitData.type === "text") {
+    //       Session.set('textBitEditingId', bitHoveringId);
+    //       Parallels.AppModes['edit-text-bit'].enter($bitElement, bitTemplate);
+    //     }
+
+    //     else {
+    //       Parallels.log.debug("bit:edit: bit not of type 'text'.");
+    //     }
+    //   }
+
+    //   else {
+    //     Parallels.log.debug('edit key ignored, not captured for a specific bit')
+    //   }
+    // });
   },
 
   bindEsc: function () {

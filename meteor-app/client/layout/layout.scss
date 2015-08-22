@@ -38,13 +38,18 @@ a           { color: #8B8BF5; }
 } 
 
 
+
 .noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -khtml-user-select: none;
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none;   /* IE 10+ */
+    
+  /* No support for these yet, future proofing */
+  -o-user-select: none;
+  user-select: none;
+
 }
 
 .field { 

@@ -14,6 +14,8 @@ var BitsUI = {
       liftStatus: bit.liftStatus,
       content: bit.content,
       opacity: bit.opacity,
+      width: bit.width,
+      height: bit.height,
       type: bit.type,
       position: bit.position,
       filename: bit.filename,
@@ -57,6 +59,8 @@ var BitsUI = {
       $set: {
         content: bit.content,
         opacity: bit.opacity,
+        width: bit.width,
+        height: bit.height,
         updatedAt: Date.now()
       }
     };

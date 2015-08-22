@@ -1,18 +1,13 @@
 Template.bit.helpers({
 
-  isEditingTextBit: function() {
-    return Session.equals('bitEditingId', this._id);
-  },
-
   isTextBit: function() {
     return this.type === "text";
   },
 
-  contentOrPlaceholder: function () {
-    var hasContent = this.content && this.content.length > 0;
-    return hasContent ? this.content : '[enter text]';
+  isImageBit: function() {
+    return this.type === "image";
   },
-
+  
   imageSrc: function () {
     return this.imageDataUrl || this.imageSource;
   },
@@ -29,5 +24,14 @@ Template.bit.helpers({
     } else {
       return 'complete';
     }
+  },
+
+  // TODO: rendering contenteditbable from inside a helper due to the following outstanding meteor issues:
+  // https://github.com/meteor/meteor/issues/2980
+  // https://github.com/meteor/meteor/issues/1964
+  // https://github.com/meteor/meteor/issues/3635
+  // possible alternative workaround: https://github.com/eluck/contenteditable/commit/b406d83863341c376f21f7de5056fdc8d4100877
+  editor: function () {
+    return '<div class="bit--editing" contenteditable="false">' + this.content + '</div>';
   }
 });

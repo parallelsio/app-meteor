@@ -13,10 +13,14 @@ Meteor.startup(function () {
         _id: bit._id,
         canvasId: bit.canvasId,
         content: bit.content,
-        opacity: payload.opacity
+        opacity: payload.opacity,
+        height: payload.height,
+        width: payload.width
       };
       bit.content = payload.content;
       bit.opacity = payload.opacity;
+      bit.height = payload.height;
+      bit.width = payload.width;
 
       onComplete(null, {payload: payload, result: bit});
     }

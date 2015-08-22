@@ -10,10 +10,10 @@ module.exports = function () {
         return self.browser.executeScript("var e = jQuery.Event( 'dblclick', { offsetX: 100, offsetY: 100 } ); $('.map').trigger(e);");
       }).
       then(function () {
-        return self.browser.findElement(self.webdriver.By.className("editbit")).sendKeys(content);
+        return self.browser.findElement(self.webdriver.By.className("bit--editing")).sendKeys(content);
       }).
       then(function () {
-        return self.browser.findElement(self.webdriver.By.className("editbit")).sendKeys(self.webdriver.Key.RETURN);
+        return self.browser.findElement(self.webdriver.By.className("bit--editing")).sendKeys(self.webdriver.Key.RETURN);
       }).
       then(callback).
       then(null, function(err) {

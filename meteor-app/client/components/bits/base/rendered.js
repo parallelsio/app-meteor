@@ -7,6 +7,36 @@ Template.bit.onRendered(function (){
 
   makeBitDraggable($bitElement);
 
+  if (template.data.type === 'text'){
+    var $content = $bitElement.find('.bit__content');
+    var $editbitElement = $content.find('.bit--editing');
+
+    $content.css("height", bit.height);
+    $content.css("width", bit.width);
+
+    // // TODO: reusable function
+    // $editbitElement.bind('mousewheel DOMMouseScroll', function(e) {
+    //   var scrollTo = null;
+
+    //   if (e.type == 'mousewheel') {
+    //     scrollTo = (e.originalEvent.wheelDelta * -1);
+    //   }
+    //   else if (e.type == 'DOMMouseScroll') {
+    //     // TODO: refactor '40' value to variable name for readability
+    //     scrollTo = 40 * e.originalEvent.detail;
+    //   }
+
+    //   if (scrollTo) {
+    //     e.preventDefault();
+    //     $(this).scrollTop(scrollTo + $(this).scrollTop());
+    //   }
+    // });
+
+    if (Session.get('textBitEditingId')){
+      Parallels.AppModes['edit-text-bit'].enter($bitElement, template);
+    }
+  }
+  
 
   // When a Bit position is updated during a concurrent session (by someone else)
   // move the bit to it's new position on all other sessions/clients
@@ -30,7 +60,7 @@ Template.bit.onRendered(function (){
       /*
         AB: OQ: would show a friendly error message but the next line we remove the bit
         so it isn't worth it. Should we figure out how to keep the Bit even if upload fails?
-        $bitElement.find('.content')[0].classList.add('complete', 'error');
+        $bitElement.find('.bit__content')[0].classList.add('complete', 'error');
       */
       computation.stop();
       Meteor.call('changeState', {

@@ -66,7 +66,7 @@ SketchBit.prototype.getEventPoint = function (event) {
 
 SketchBit.prototype.isFocused = function () {
   var self = this;
-  var currentlyEditingId = Session.get('bitEditingId');
+  var currentlyEditingId = Session.get('sketchBitEditingId');
   return currentlyEditingId && currentlyEditingId === self._id;
 };
 
@@ -99,6 +99,6 @@ SketchBit.prototype.save = function () {
   Parallels.Audio.player.play('fx-cha-ching');
 
   if (self.isFocused()) {
-    Session.set('bitEditingId', null);
+    Session.set('sketchBitEditingId', null);
   }
 };

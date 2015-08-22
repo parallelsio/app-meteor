@@ -83,7 +83,7 @@ $color-second: #C7F464;
 
 .wipe.load.top-to-bottom .mask {
   width: 100%;
-  height: calc(50% - #{ $line-size });
+  height: calc(50% - #{$line-size});
   background: $color-init;
   
   &.top     { top: 0; }
@@ -98,7 +98,7 @@ $color-second: #C7F464;
 }
 
 .wipe.load.side-to-side .mask {
-  width: calc(50% - #{ $line-size });
+  width: calc(50% - #{$line-size});
   background: $color-first;
 }
 

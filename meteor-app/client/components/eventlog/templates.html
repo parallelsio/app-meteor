@@ -1,6 +1,8 @@
 <template name="eventlog">
   <div class="eventlog p-lr-1 bg-white">
-    <div class="activity--header p-1 bold border-b-solid">Activity Stream</div>
+    <div class="activity--header p-1 bold border-b-solid">
+      <i class="controls__icon  icon-clock"></i> 
+      Activity Stream</div>
     <div class="timeline">
       {{ #each events }}
         {{> event }}

@@ -15,7 +15,6 @@ Parallels.AppModes['preview-bit'] = {
     bitTemplate = Utilities.getBitTemplate(bitHoveringId);
     bit = Blaze.getData(bitTemplate);
 
-
     // only supporting image preview currently
     // webpage is currently represented on canvas as an image
     if ((bit.type === "image") || (bit.type === "webpage")){

@@ -1,6 +1,6 @@
 <template name="sketchBit">
   <div tabindex="0" class="bit sketch noselect" data-id="{{ _id }}">
-    <div class="content {{ color }}">
+    <div class="bit__content {{ color }}">
 
       <!-- 
       Enable in Chrome via:  chrome://flags/#enable-npapi
@@ -18,6 +18,6 @@
       <canvas height="500" width="500"></canvas>
 
     </div>
-    <p class="ui-widget-header"></p>
+    <p class="bit__drag-handle"></p>
   </div>
 </template>
